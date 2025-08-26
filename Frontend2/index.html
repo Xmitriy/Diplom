@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон захиалга</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Салон захиалга</h1>
+        <form id="bookingForm">
+            <label for="service">Үйлчилгээ сонгох:</label>
+            <select id="service" name="service">
+                <option value="">-- Сонгох --</option>
+                <option value="haircut">Үс засалт</option>
+                <option value="manicure">Маникюр</option>
+                <option value="massage">Массаж</option>
+            </select>
+
+            <label for="time">Цаг сонгох:</label>
+            <input type="time" id="time" name="time">
+
+            <button type="submit">Захиалах</button>
+        </form>
+        <div id="qrSection" class="hidden">
+            <h2>Таны QR код</h2>
+            <canvas id="qrcode"></canvas>
+            <p>Энэ QR кодыг салонд очихдоо харуулна уу.</p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
