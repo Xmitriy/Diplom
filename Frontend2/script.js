@@ -1,46 +1,119 @@
-// Animation for form elements
-const serviceSelect = document.getElementById('service');
-const timeInput = document.getElementById('time');
+// Navigation
+// Home товч болон лого дээр дарвал home section руу буцаана
+function showSection(id){
+    ['home','services','myBookings','faq','adminLogin','adminDashboard'].forEach(s=>{
+        let el = document.getElementById(s);
+        if(el) el.style.display = (s===id)?'block':'none';
+    });
+}
 
-[serviceSelect, timeInput].forEach(el => {
-    el.addEventListener('focus', (e) => {
-        e.target.style.boxShadow = '0 0 0 2px #6a82fb44';
-        e.target.style.transition = 'box-shadow 0.3s';
-    });
-    el.addEventListener('blur', (e) => {
-        e.target.style.boxShadow = '';
-    });
+document.getElementById('homeNav').addEventListener('click', ()=>showSection('home'));
+const logoHome = document.getElementById('logoHome');
+if(logoHome) logoHome.addEventListener('click', ()=>showSection('home'));
+
+// Login modal control
+const userIconBtn = document.getElementById('userIconBtn');
+const loginModal = document.getElementById('loginModal');
+const closeLoginModal = document.getElementById('closeLoginModal');
+const loginSubmit = document.getElementById('loginSubmit');
+
+userIconBtn.addEventListener('click', () => {
+    loginModal.style.display = 'block';
+});
+closeLoginModal.addEventListener('click', () => {
+    loginModal.style.display = 'none';
+});
+window.addEventListener('click', (e) => {
+    if (e.target === loginModal) loginModal.style.display = 'none';
 });
 
-// Form submit and QR code generation
-const form = document.getElementById('bookingForm');
-const qrSection = document.getElementById('qrSection');
-const qrCanvas = document.getElementById('qrcode');
-
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const service = serviceSelect.value;
-    const time = timeInput.value;
-    if (!service || !time) {
-        alert('Бүх талбарыг бөглөнө үү!');
-        return;
+loginSubmit.addEventListener('click', () => {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    if (username === 'admin' && password === 'admin123') {
+        alert('Админ нэвтэрлээ');
+        loginModal.style.display = 'none';
+        showSection('adminDashboard');
+    } else if (username && password) {
+        alert('Хэрэглэгчээр нэвтэрлээ');
+        loginModal.style.display = 'none';
+        showSection('home');
+    } else {
+        alert('Нэр болон нууц үгээ оруулна уу');
     }
-    // QR code data
-    const qrData = `Үйлчилгээ: ${service}\nЦаг: ${time}\nОгноо: ${new Date().toLocaleDateString()}`;
-    // Generate QR
-    const qr = new QRious({
-        element: qrCanvas,
-        value: qrData,
-        size: 200,
-        background: '#fff',
-        foreground: '#4a4a8a',
-        level: 'H'
-    });
-    // Animate QR section
-    qrSection.classList.remove('hidden');
-    setTimeout(() => {
-        qrSection.classList.add('visible');
-    }, 10);
-    // Optionally, scroll to QR
-    qrSection.scrollIntoView({ behavior: 'smooth' });
 });
+
+// Book Service
+let bookings=[];
+document.querySelectorAll('.bookService').forEach(btn=>{
+    btn.addEventListener('click', function(){
+        let service=this.dataset.service;
+        let today=new Date();
+        bookings.push({service, date:today.toLocaleDateString()});
+
+        let li=document.createElement('li');
+        li.textContent=`${service} захиалсан (${today.toLocaleDateString()})`;
+        document.getElementById('bookingList').appendChild(li);
+
+        alert(`${service} захиалга амжилттай`);
+
+        // Admin dashboard update
+        document.getElementById('todayBookings').textContent = bookings.length;
+        document.getElementById('weekBookings').textContent = bookings.length;
+        document.getElementById('monthIncome').textContent = bookings.length * 20000 + '₮';
+    });
+});
+
+// Banner button navigation
+document.addEventListener('DOMContentLoaded', function() {
+    // Home page товчлууд
+    var servicesNav = document.getElementById('servicesNav');
+    if(servicesNav) servicesNav.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'Service.html';
+    };
+    var seeMoreBtn = document.getElementById('seeMoreBtn');
+    if(seeMoreBtn) seeMoreBtn.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'Direction.html';
+    };
+    // Бүх хуудасны лого дээр дарвал Home руу
+    var logoHome = document.getElementById('logoHome');
+    if(logoHome) logoHome.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'Home.html';
+    };
+    var userIconBtn = document.getElementById('userIconBtn');
+    if(userIconBtn) userIconBtn.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'Login.html';
+    };
+});
+
+const addressCard = document.getElementById('addressCard');
+const closeAddressCard = document.getElementById('closeAddressCard');
+if(closeAddressCard) closeAddressCard.addEventListener('click', ()=>{
+    if(addressCard) addressCard.style.display = 'none';
+});
+window.addEventListener('click', (e) => {
+    if(e.target === addressCard) addressCard.style.display = 'none';
+});
+
+// SPA маягийн хуудсан шилжилт (React шиг)
+function goToPage(page) {
+    if (page === 'services') {
+        fetch('Service.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.innerHTML = html;
+                window.history.pushState({}, '', 'Service.html');
+            });
+    } else if (page === 'direction') {
+        fetch('Direction.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.innerHTML = html;
+                window.history.pushState({}, '', 'Direction.html');
+            });
+    }
+}

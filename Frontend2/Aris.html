@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Арьс арчилгаа — Үйлчилгээний дэлгэрэнгүй</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #f7f7f8;
+  --card: #ffffff;
+  --muted: #6b6f76;
+  --accent: #6b46ff;
+  --accent-2: #4b2fd6;
+  --radius: 12px;
+  --gap: 18px;
+  --maxwidth: 1100px;
+  --shadow: 0 4px 12px rgba(16,24,40,0.06);
+}
+
+/* Reset & base */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%}
+body{
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111827;
+  line-height:1.45;
+  padding:20px 12px;
+}
+
+/* Container */
+.container{max-width:var(--maxwidth);margin:0 auto;}
+
+/* Header */
+.header{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:24px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 2px 8px rgba(16,24,40,0.07);
+  border-bottom:3px solid var(--accent);
+  padding:14px 22px 14px 18px;
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand img{width:42px;height:42px;border-radius:8px;object-fit:cover;border:1px solid rgba(17,24,39,0.08);}
+.brand .title{font-weight:600;font-size:16px;letter-spacing:0.01em;}
+.actions{display:flex;gap:8px;}
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 14px;
+  border-radius:8px;
+  font-size:14px;
+  color:#fff;
+  background:var(--accent);
+  border:none;
+  text-decoration:none;
+  font-weight:500;
+  box-shadow:0 1px 4px rgba(107,70,255,0.08);
+  transition:background .15s, box-shadow .15s, transform .13s;
+}
+.back svg{opacity:0.9;stroke:#fff;}
+.back:hover{background:var(--accent-2);transform:translateY(-2px) scale(1.04);box-shadow:0 4px 12px rgba(107,70,255,0.13);}
+
+/* Page header */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.page-header h1{font-size:20px;margin:0;font-weight:600;}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--gap);}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .15s ease, box-shadow .15s ease, background .3s ease;
+  border:1px solid rgba(107,70,255,0.1);
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 25px rgba(16,24,40,0.12);
+  background:linear-gradient(135deg, #f3ebff, #e0d6ff);
+}
+
+.card .img{width:100%;height:200px;object-fit:cover;display:block;}
+.card .content{padding:14px;display:flex;flex-direction:column;gap:8px;}
+.card h3{margin:0;font-size:15px;font-weight:600;}
+.card p{margin:0;font-size:13px;color:var(--muted);line-height:1.4;}
+
+/* Price & button */
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px;}
+.price{
+  font-weight:600;
+  font-size:14px;
+  color:var(--accent-2);
+  background:rgba(107,70,255,0.06);
+  padding:4px 8px;
+  border-radius:6px;
+}
+.btn{
+  border:0;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+  font-weight:500;
+  transition:opacity .15s ease, transform .15s ease;
+}
+.btn:hover{opacity:0.9;transform:scale(1.05);}
+
+/* Search bar */
+.search-bar {
+  max-width: var(--maxwidth);
+  margin: 0 auto 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.search-bar input, .search-bar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+}
+.search-bar input:focus, .search-bar select:focus {
+  border-color: var(--accent);
+}
+
+/* Responsive */
+@media(max-width:480px){
+  .brand .title{font-size:14px}
+  .page-header h1{font-size:18px}
+  .card .img{height:160px}
+  .search-bar input, .search-bar select{width:100%; max-width:calc(50% - 10px);}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="brand">
+      <img src="img/logo.jpg" alt="Logo">
+      <div class="title">Арьс арчилгаа</div>
+    </div>
+    <div class="actions">
+      <a class="back" href="Service.html">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Буцах
+      </a>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h1>Арьс арчилгаа — Үйлчилгээ</h1>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="nameSearch" placeholder="Нэрээр хайх..." onkeyup="filterCards()">
+    <select id="sortPrice" onchange="filterCards()">
+      <option value="none">Дараалал</option>
+      <option value="asc">₮ Багаас их</option>
+      <option value="desc">₮ Ихээс бага</option>
+    </select>
+  </div>
+
+  <section class="grid">
+
+    <article class="card">
+      <img class="img" src="img/1.JPG" alt="Гүн цэвэрлэх">
+      <div class="content">
+        <h3>Гүн цэвэрлэх нүүрний үйлчилгээ</h3>
+        <p>Арьсыг гүн цэвэрлэх, нүх сүвийг цэвэрлэх процедур.</p>
+        <div class="row">
+          <div class="price">₮35,000</div>
+          <button class="btn" onclick="order('Гүн цэвэрлэх нүүрний үйлчилгээ','₮35,000')">Захиалах</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="img" src="img/2.JPG" alt="Чийгшүүлэх маск">
+      <div class="content">
+        <h3>Чийгшүүлэх маск</h3>
+        <p>Арьсыг чийгшүүлж, хуурайшилттай тэмцэх үйлчилгээ.</p>
+        <div class="row">
+          <div class="price">₮40,000</div>
+          <button class="btn" onclick="order('Чийгшүүлэх маск','₮40,000')">Захиалах</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="img" src="img/3.JPG" alt="Анти-эйжинг">
+      <div class="content">
+        <h3>Анти-эйжинг</h3>
+        <p>Үрчлээг багасгах, арьсыг сэргээх үйлчилгээ.</p>
+        <div class="row">
+          <div class="price">₮60,000</div>
+          <button class="btn" onclick="order('Анти-эйжинг','₮60,000')">Захиалах</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="img" src="img/5.JPG" alt="Батга эмчилгээ">
+      <div class="content">
+        <h3>Батга эмчилгээ</h3>
+        <p>Батга үүсэх шалтгааныг илрүүлж, арьсыг тайвшруулах.</p>
+        <div class="row">
+          <div class="price">₮45,000</div>
+          <button class="btn" onclick="order('Батга эмчилгээ','₮45,000')">Захиалах</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img class="img" src="img/4.JPG" alt="Гялалзуулах цэвэрлэгээ">
+      <div class="content">
+        <h3>Гялалзуулах цэвэрлэгээ / Peel</h3>
+        <p>Арьсыг гэрэлтүүлэх, өнгө алдагдлыг сайжруулах үйлчилгээ.</p>
+        <div class="row">
+          <div class="price">₮55,000</div>
+          <button class="btn" onclick="order('Гялалзуулах цэвэрлэгээ','₮55,000')">Захиалах</button>
+        </div>
+      </div>
+    </article>
+
+  </section>
+</div>
+
+<script>
+function order(name, price){
+  window.open(`Zahialga.html?service=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`, '_blank', 'width=480,height=600');
+}
+
+function filterCards(){
+  const nameInput = document.getElementById('nameSearch').value.toLowerCase();
+  const sortOrder = document.getElementById('sortPrice').value;
+  const grid = document.querySelector('.grid');
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  let filtered = cards.filter(card => {
+    const name = card.querySelector('h3').textContent.toLowerCase();
+    return name.includes(nameInput);
+  });
+  if(sortOrder === 'asc'){
+    filtered.sort((a,b) => {
+      const aPrice = parseInt(a.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+      const bPrice = parseInt(b.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+      return aPrice - bPrice;
+    });
+  } else if(sortOrder === 'desc'){
+    filtered.sort((a,b) => {
+      const aPrice = parseInt(a.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+      const bPrice = parseInt(b.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+      return bPrice - aPrice;
+    });
+  }
+  grid.innerHTML = '';
+  filtered.forEach(card => grid.appendChild(card));
+}
+</script>
+</body>
+</html>

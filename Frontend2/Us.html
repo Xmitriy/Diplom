@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эмэгтэйчүүдийн Үс засалт</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fa;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b6f76;
+  --accent:#1d4ed8;
+  --accent-hover:#2563eb;
+  --radius:12px;
+  --gap:18px;
+  --shadow:0 4px 12px rgba(16,24,40,0.06);
+  --maxwidth:1100px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.45;
+  padding:20px 12px;
+}
+header {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(16,24,40,0.07);
+  border-bottom: 3px solid var(--accent);
+  padding: 14px 22px 14px 18px;
+  max-width: var(--maxwidth);
+  margin: 0 auto 24px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+header .logo a{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:600;
+  gap:10px;
+}
+header .logo img{height:42px;width:42px;border-radius:8px;object-fit:cover;border:1px solid rgba(17,24,39,0.08);}
+header .actions{display:flex;gap:8px;}
+header .actions a.back {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 14px;
+  border-radius:8px;
+  font-size:14px;
+  color:#fff;
+  background:var(--accent);
+  border:none;
+  text-decoration:none;
+  font-weight:500;
+  box-shadow:0 1px 4px rgba(29,78,216,0.08);
+  transition:background .15s, box-shadow .15s, transform .13s;
+}
+header .actions a.back svg{opacity:0.9;stroke:#fff;}
+header .actions a.back:hover{background:var(--accent-hover);transform:translateY(-2px) scale(1.04);box-shadow:0 4px 12px rgba(29,78,216,0.13);}
+.page-header{
+  max-width:var(--maxwidth);
+  margin:0 auto 20px auto;
+  text-align:center;
+}
+.page-header h1{
+  font-size:24px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.page-header p{
+  color:var(--muted);
+  font-size:14px;
+}
+.search-bar{
+  max-width:var(--maxwidth);
+  margin:0 auto 20px auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+.search-bar input, .search-bar select{
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+  outline:none;
+}
+.search-bar input:focus, .search-bar select:focus{
+  border-color:var(--accent);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:var(--gap);
+  max-width:var(--maxwidth);
+  margin:0 auto;
+}
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.card:hover{
+  transform:translateY(-3px); 
+  box-shadow:0 8px 20px rgba(16,24,40,0.08);
+}
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+.card .content{
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.card h3{
+  margin:0;
+  font-size:16px;
+  font-weight:600;
+}
+.card p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.4;
+}
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:auto;
+  gap:10px;
+}
+.price{
+  font-weight:600;
+  font-size:14px;
+  color:var(--accent);
+}
+.btn{
+  border:0;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+  font-weight:500;
+  transition:background .15s ease;
+}
+.btn:hover{background:var(--accent-hover);}
+@media(max-width:480px){
+  .page-header h1{font-size:20px}
+  .card img{height:160px}
+  .search-bar input, .search-bar select{width:100%; max-width:calc(50% - 10px);}
+}
+.back-btn {
+  display: inline-block;
+  margin: 0 0 18px 0;
+  padding: 7px 16px;
+  background: #1d4ed8;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.18s;
+}
+.back-btn:hover {
+  background: #2563eb;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <a href="Service.html"><img src="img/logo.jpg" alt="Logo"> Service</a>
+  </div>
+  <div class="actions">
+    <a class="back" href="Service.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Буцах
+    </a>
+  </div>
+</header>
+
+<div class="page-header">
+  <h1>Эмэгтэйчүүдийн Үс засалт</h1>
+  <p>Нэрээр шүүлт хийж, үнийн дарааллаар харах боломжтой.</p>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="nameSearch" placeholder="Нэрээр хайх..." onkeyup="filterCards()">
+  <select id="sortPrice" onchange="filterCards()">
+    <option value="none">Дараалал</option>
+    <option value="asc">₮ Багаас их</option>
+    <option value="desc">₮ Ихээс бага</option>
+  </select>
+</div>
+
+<section class="grid" id="grid">
+  <article class="card" data-name="Wolf Cut" data-price="55000">
+    <img src="img/hair1.JPG" alt="Wolf Cut">
+    <div class="content">
+      <h3>Wolf Cut</h3>
+      <p>Орчин үеийн эмэгтэйчүүдийн давхарласан үс засалт.</p>
+      <div class="row">
+        <div class="price">₮55,000</div>
+        <button class="btn" onclick="order('Wolf Cut','₮55,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Butterfly Cut" data-price="60000">
+    <img src="img/hair2.JPG" alt="Butterfly Cut">
+    <div class="content">
+      <h3>Butterfly Cut</h3>
+      <p>Энгийн болон гоёмсог butterfly хэлбэрийн үс засалт.</p>
+      <div class="row">
+        <div class="price">₮60,000</div>
+        <button class="btn" onclick="order('Butterfly Cut','₮60,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Bob Cut" data-price="50000">
+    <img src="img/hair3.JPG" alt="Bob Cut">
+    <div class="content">
+      <h3>Bob Cut</h3>
+      <p>Эмэгтэйчүүдийн богино bob хэв маяг.</p>
+      <div class="row">
+        <div class="price">₮50,000</div>
+        <button class="btn" onclick="order('Bob Cut','₮50,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Layer Cut" data-price="52000">
+    <img src="img/hair4.JPG" alt="Layer Cut">
+    <div class="content">
+      <h3>Layer Cut</h3>
+      <p>Давхарласан үс засалт, хэмжээ тохируулах.</p>
+      <div class="row">
+        <div class="price">₮52,000</div>
+        <button class="btn" onclick="order('Layer Cut','₮52,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Long Hair" data-price="45000">
+    <img src="img/hair5.JPG" alt="Long Hair">
+    <div class="content">
+      <h3>Long Hair</h3>
+      <p>Урт үс засалт, гоёмсог засалттай.</p>
+      <div class="row">
+        <div class="price">₮45,000</div>
+        <button class="btn" onclick="order('Long Hair','₮45,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Curly Hair" data-price="55000">
+    <img src="img/hair6.JPG" alt="Curly Hair">
+    <div class="content">
+      <h3>Curly Hair</h3>
+      <p>Хэлбэрийн үс засалт, үс буржгарлах эффекттэй.</p>
+      <div class="row">
+        <div class="price">₮55,000</div>
+        <button class="btn" onclick="order('Curly Hair','₮55,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Straight Hair" data-price="50000">
+    <img src="img/hair7.JPG" alt="Straight Hair">
+    <div class="content">
+      <h3>Straight Hair</h3>
+      <p>Шударга шулуун үс засалт, өдөр тутмын стильд тохиромжтой.</p>
+      <div class="row">
+        <div class="price">₮50,000</div>
+        <button class="btn" onclick="order('Straight Hair','₮50,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Pixie Cut" data-price="48000">
+    <img src="img/hair8.JPG" alt="Pixie Cut">
+    <div class="content">
+      <h3>Pixie Cut</h3>
+      <p>Богино pixie хэв маяг, эмэгтэйчүүдэд тохиромжтой.</p>
+      <div class="row">
+        <div class="price">₮48,000</div>
+        <button class="btn" onclick="order('Pixie Cut','₮48,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Shag Cut" data-price="53000">
+    <img src="img/hair9.JPG" alt="Shag Cut">
+    <div class="content">
+      <h3>Shag Cut</h3>
+      <p>Орчин үеийн shag засалт, давхарласан өнгөлөлттэй.</p>
+      <div class="row">
+        <div class="price">₮53,000</div>
+        <button class="btn" onclick="order('Shag Cut','₮53,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card" data-name="Braids" data-price="60000">
+    <img src="img/hair0.JPG" alt="Braids">
+    <div class="content">
+      <h3>Braids</h3>
+      <p>Үс ороох, гоёмсог braid style.</p>
+      <div class="row">
+        <div class="price">₮60,000</div>
+        <button class="btn" onclick="order('Braids','₮60,000')">Захиалах</button>
+      </div>
+    </div>
+  </article>
+</section>
+
+<script>
+function order(name, price){
+  window.open(`Zahialga.html?service=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`, '_blank', 'width=480,height=600');
+}
+
+function filterCards(){
+  const nameInput = document.getElementById('nameSearch').value.toLowerCase();
+  const sortOrder = document.getElementById('sortPrice').value;
+
+  const grid = document.getElementById('grid');
+  const cards = Array.from(grid.querySelectorAll('.card'));
+
+  let filtered = cards.filter(card => {
+    const name = card.dataset.name.toLowerCase();
+    return name.includes(nameInput);
+  });
+
+  if(sortOrder === 'asc'){
+    filtered.sort((a,b) => a.dataset.price - b.dataset.price);
+  } else if(sortOrder === 'desc'){
+    filtered.sort((a,b) => b.dataset.price - a.dataset.price);
+  }
+
+  grid.innerHTML = '';
+  filtered.forEach(card => grid.appendChild(card));
+}
+</script>
+
+</body>
+</html>

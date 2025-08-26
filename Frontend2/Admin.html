@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body {
+    margin:0;
+    font-family: 'Montserrat', sans-serif;
+    background:#f9f9f9;
+    color:#333;
+}
+header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 24px;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+}
+header .logo {
+    font-size:1.4rem;
+    font-weight:600;
+    color:#333;
+}
+header nav button {
+    background:#007bff;
+    border:none;
+    padding:8px 16px;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+header nav button:hover {
+    opacity:.85;
+}
+main {
+    padding:24px;
+}
+h2,h3 {
+    color:#333;
+}
+.dashboard-stats {
+    display:flex;
+    gap:16px;
+    margin:16px 0;
+    flex-wrap:wrap;
+}
+.dashboard-stats div {
+    background:#fff;
+    padding:18px 24px;
+    border-radius:12px;
+    flex:1 1 220px;
+    box-shadow:0 1px 4px rgba(0,0,0,0.1);
+    text-align:center;
+    font-weight:600;
+}
+#adminOrderTable {
+    width:100%;
+    margin:18px 0 24px 0;
+    border-collapse:collapse;
+    /* border-radius:12px; */
+    /* background: #fff; */
+    /* Remove white background and border radius for cleaner look */
+    box-shadow:0 1px 6px rgba(0,0,0,0.1);
+    overflow:hidden;
+}
+#adminOrderTable th {
+    background:#f1f1f1;
+    color:#333;
+    font-weight:600;
+    padding:12px;
+    text-align:center;
+}
+#adminOrderTable td {
+    border-bottom:1px solid #eee;
+    padding:10px;
+    text-align:center;
+    color:#555;
+}
+input, select {
+    padding:8px 12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    background:#fff;
+    color:#333;
+    margin-right:6px;
+}
+button {
+    background:#007bff;
+    border:none;
+    padding:6px 12px;
+    color:#fff;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button:hover{
+    opacity:0.85;
+}
+canvas {
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:24px;
+}
+.status-btn {
+    padding:4px 8px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+    border:1px solid #ccc;
+}
+.status-new { background:#e0f7fa; color:#007bff; }
+.status-processing { background:#fff3e0; color:#ff9800; }
+.status-done { background:#e8f5e9; color:#4caf50; }
+.status-btn:hover { opacity:.8; }
+@media(max-width:600px){
+    .dashboard-stats{ flex-direction:column; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Admin Dashboard</div>
+  <nav><button onclick="location.href='Home.html'">Буцах</button></nav>
+</header>
+<main>
+<section id="adminDashboard">
+<h2>Админ хэсэг</h2>
+<h3>Dashboard </h3>
+<div class="dashboard-stats">
+  <div>Өнөөдрийн захиалга: <span id="todayBookings">0</span></div>
+  <div>Сүүлийн 7 хоногийн захиалга: <span id="weekBookings">0</span></div>
+  <div>Сарын орлого: <span id="monthIncome">0₮</span></div>
+</div>
+
+<h3>Захиалгын менежмент</h3>
+<div>
+<label>Түүх харах: </label>
+<select id="historyRange">
+  <option value="day">Өдөр</option>
+  <option value="week">7 хоног</option>
+  <option value="month">Сар</option>
+  <option value="year">Жил</option>
+</select>
+<input type="text" id="searchInput" placeholder="Нэр, утас, үйлчилгээ хайх">
+</div>
+<table id="adminOrderTable">
+<thead>
+<tr>
+  <th>Огноо</th>
+  <th>Цаг</th>
+  <th>Үйлчилгээ</th>
+  <th>Нэр</th>
+  <th>Утас</th>
+  <th>Тайлбар</th>
+  <th>Статус</th>
+  <th>Устгах</th>
+</tr>
+</thead>
+<tbody id="adminOrderTbody"></tbody>
+</table>
+</section>
+</main>
+<footer style="text-align:center;padding:12px 0;color:#888;border-top:1px solid #eee;">&copy; 2025 Salon Booking</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+function getOrders(){ return JSON.parse(localStorage.getItem('salonOrders')||'[]'); }
+function saveOrders(orders){ localStorage.setItem('salonOrders', JSON.stringify(orders)); }
+
+function updateStats(){
+  const orders = getOrders();
+  const today = new Date().toISOString().split('T')[0];
+  const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
+  const month = new Date().getMonth();
+  let todayCount=0, weekCount=0, monthIncome=0;
+  orders.forEach(o=>{
+    const orderDate = new Date(o.date);
+    if(o.date===today) todayCount++;
+    if(orderDate>=weekAgo) weekCount++;
+    if(orderDate.getMonth()===month) monthIncome += parseInt(o.price||0);
+  });
+  document.getElementById('todayBookings').textContent = todayCount;
+  document.getElementById('weekBookings').textContent = weekCount;
+  document.getElementById('monthIncome').textContent = monthIncome.toLocaleString()+'₮';
+}
+
+function renderOrders(filter=''){
+  const tbody = document.getElementById('adminOrderTbody');
+  if(!tbody) return;
+  const orders = getOrders().filter(o=>o.name.includes(filter)||o.phone.includes(filter)||o.service.includes(filter));
+  tbody.innerHTML = orders.length? '': '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:18px;">Захиалга алга</td></tr>';
+  orders.slice().reverse().forEach((o,index)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${o.date}</td>
+      <td>${o.time}</td>
+      <td>${o.service}</td>
+      <td>${o.name}</td>
+      <td>${o.phone}</td>
+      <td>${o.note||''}</td>
+      <td>
+        <span class="status-btn status-${o.status||'new'}" onclick="changeStatus(${index})">
+        ${o.status==='processing'?'Боловсруулж байна':o.status==='done'?'Дууссан':'Шинэ'}</span>
+      </td>
+      <td><button onclick="deleteOrder(${index})" style="background:#dc3545;">Устгах</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+window.changeStatus = function(index){
+  const orders = getOrders();
+  const statuses = ['new','processing','done'];
+  orders[index].status = statuses[(statuses.indexOf(orders[index].status||'new')+1)%statuses.length];
+  saveOrders(orders);
+  renderOrders(document.getElementById('searchInput').value);
+  updateStats();
+}
+
+window.deleteOrder = function(index){
+  const orders = getOrders();
+  orders.splice(index,1);
+  saveOrders(orders);
+  renderOrders(document.getElementById('searchInput').value);
+  updateStats();
+}
+
+document.getElementById('searchInput').addEventListener('input', e=>{
+  renderOrders(e.target.value);
+});
+
+window.addEventListener('storage',function(e){
+  if(e.key==='salonOrders'){ renderOrders(); updateStats(); }
+});
+
+renderOrders();
+updateStats();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хаяг байршил</title>
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 10px;
+            vertical-align: middle;
+            transition: transform 0.3s;
+        }
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+        .salon-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #ff6f61;
+        }
+
+        /* Main content */
+        main {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .address-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .address-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        .address-card-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        .address-map {
+            margin-bottom: 20px;
+        }
+        .address-info {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .address-info b {
+            color: #ff6f61;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #333;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .address-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" id="logoHome" style="cursor:pointer;">
+            <a href="Home.html" style="text-decoration:none;color:inherit;">
+                <img src="img/logo.jpg" alt="Namun Salon Logo"> 
+                <span class="salon-title">Namun Salon</span>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="address-card address-card-page">
+            <div class="address-card-content">
+                <h3>Манай салон - Хаяг байршил</h3>
+                <div class="address-map">
+                    <iframe src="https://www.google.com/maps?q=47.918873,106.917701&z=16&output=embed" width="100%" height="220" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="address-info">
+                    <b>Хаяг:</b> Улаанбаатар хот, Сүхбаатар дүүрэг, 1-р хороо, Салон байр<br>
+                    <b>Утас:</b> 99112233
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 Salon Booking
+    </footer>
+</body>
+</html>

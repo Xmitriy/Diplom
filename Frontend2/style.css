@@ -1,81 +1,593 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f7f7fb;
+:root {
+    --primary:#16a34a;
+    --secondary:#cfcfcf;
+    --hover:#13803d;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+
+body { background:#fff; color:#000; }
+
+/* ===== Base ===== */
+body, html {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
 }
-.container {
-    max-width: 400px;
-    margin: 40px auto;
+
+/* ===== Header ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    padding: 32px 24px 24px 24px;
-    transition: box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.container:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+
+#userIconBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
 }
-h1 {
-    text-align: center;
-    color: #4a4a8a;
-}
-form label {
+#userIconBtn svg {
     display: block;
-    margin-top: 18px;
-    color: #333;
-    font-weight: 500;
+    color: #222;
+    width: 38px;
+    height: 38px;
+    transition: color 0.2s, transform 0.2s;
 }
-select, input[type="time"] {
+#userIconBtn:hover svg {
+    color: #ff6f61;
+    transform: scale(1.13);
+}
+
+/* ===== Banner ===== */
+.banner-container {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 0 0 0;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    margin: 32px auto 16px auto;
+    max-width: 1100px;
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #d1d1e0;
-    border-radius: 8px;
+    min-height: 340px;
+}
+
+.banner-left, .banner-right {
+    flex: 1;
+    margin: 0;
+    min-width: 240px;
+}
+
+.banner-img-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+}
+
+.banner-img {
+    width: 100%;
+    max-width: 160px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    background: #eee;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.banner-img:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    transform: scale(1.04);
+}
+
+.banner-title {
+    font-size: 42px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeInUp 0.8s forwards;
+    animation-delay: 0.2s;
+}
+
+.banner-sub, .banner-btn-group, .banner-desc {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeInUp 0.8s forwards;
+}
+
+.banner-sub {
+    animation-delay: 0.4s;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    background: #fafaff;
+    margin-top: 5px;
 }
-select:focus, input[type="time"]:focus {
-    border-color: #4a4a8a;
-    outline: none;
-    box-shadow: 0 0 0 3px #6a82fb33;
-    transform: scale(1.03);
+
+.banner-btn-group {
+    margin-top: 15px;
+    animation-delay: 0.6s;
 }
-select:hover, input[type="time"]:hover {
-    border-color: #6a82fb;
-    background: #f0f4ff;
-    transform: scale(1.01);
+
+.banner-desc {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+    animation-delay: 0.8s;
 }
-button[type="submit"] {
+
+.banner-top-line {
     width: 100%;
-    margin-top: 24px;
-    padding: 12px;
-    background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+    height: 3px;
+    background: #222;
+    border-radius: 2px;
+    margin-bottom: 24px;
+}
+
+/* ===== Buttons & Animation ===== */
+.banner-btn, .bookService {
+    background: #ff6f61;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.08);
+    font-size: 1.08em;
+}
+
+.banner-btn:hover, .bookService:hover {
+    background: #ff4b3e;
+    color: #fff;
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(255,94,126,0.13);
+    border-color: transparent;
+}
+
+/* ===== Banner Animation ===== */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Footer ===== */
+footer {
+    padding: 8px 0 8px 0;
+    text-align: center;
+    background: #f5f5f5;
+    margin-top: 0;
+    position: relative;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .banner-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 0 0 0;
+    }
+    .banner-left, .banner-right {
+        width: 100%;
+        min-width: 0;
+    }
+    .banner-img {
+        max-width: 100px;
+    }
+    .banner-title {
+        font-size: 28px;
+    }
+    .banner-sub {
+        font-size: 13px;
+    }
+    .banner-desc {
+        font-size: 11px;
+    }
+}
+
+header .logo { font-size:1.5em; font-weight:bold; }
+
+header nav button, header .auth button {
+    margin-left:8px;
+    padding:6px 12px;
+    cursor:pointer;
+    border:none;
+    border-radius:4px;
+    transition:0.3s;
+}
+
+header nav button { background:var(--secondary); color:#000; }
+header nav button:hover { background:#bbb; }
+
+header .auth button {
+    background:transparent;
+    color:#fff;
+    border:none;
+    padding:0;
+    margin-left:12px;
+    font-size:1.8em;
+    cursor:pointer;
+    transition:0.2s;
+}
+header .auth button:hover {
+    color:var(--primary);
+    background:transparent;
+}
+
+main { padding:20px; }
+
+section { margin-bottom:30px; }
+section h2 { margin-bottom:15px; border-bottom:2px solid var(--primary); display:inline-block; padding-bottom:5px; }
+
+.service { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.service button { background:var(--primary); color:#fff; padding:6px 12px; border-radius:5px; transition:0.3s; }
+.service button:hover { background:var(--hover); }
+
+#bookingList li, #staffList li, #serviceList li { margin-bottom:5px; padding:5px; background:#f0f0f0; border-radius:3px; }
+
+input { padding:6px 10px; margin-right:5px; margin-bottom:10px; }
+
+/* Login Modal Styles */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: #fff;
+    padding: 30px 24px 20px 24px;
+    border-radius: 8px;
+    min-width: 300px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.modal-content input {
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.modal-content button {
+    background: var(--primary);
     color: #fff;
     border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 4px;
+    padding: 8px 0;
+    font-size: 1em;
     cursor: pointer;
-    transition: background 0.3s;
+    margin-top: 8px;
 }
-button[type="submit"]:hover {
-    background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+.modal-content button:hover {
+    background: var(--hover);
 }
-#qrSection {
-    margin-top: 32px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(40px);
-    pointer-events: none;
-    transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1);
+.close {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
 }
-#qrSection.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+.close:hover {
+    color: #000;
 }
-.hidden {
+
+/* Admin Dashboard Minimalist Styles */
+.admin-dashboard-container {
+    max-width: 900px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    padding: 32px 28px 32px 28px;
+}
+.admin-badge {
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.8em;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 24px 0 16px 0;
+}
+.dashboard-card {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+}
+.card-title {
+    font-size: 1em;
+    color: #888;
+    margin-bottom: 8px;
+}
+.card-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--primary);
+}
+.admin-section {
+    margin: 32px 0 0 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+.admin-section:last-child {
+    border-bottom: none;
+}
+.admin-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.admin-list {
+    margin: 10px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+.admin-list li {
+    background: #f3f3f3;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    font-size: 1em;
+}
+.admin-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(22,163,74,0.08);
+}
+.admin-btn:hover {
+    background: #0e7a36;
+    box-shadow: 0 4px 16px rgba(22,163,74,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+
+select, input[type="text"], input[type="number"] {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-size: 1em;
+    outline: none;
+    transition: border 0.2s;
+}
+select:focus, input[type="text"]:focus, input[type="number"]:focus {
+    border: 1.5px solid var(--primary);
+}
+
+/* Home Banner Styles */
+.banner-home {
+    background: #f7f7f7;
+    padding: 0;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.banner-container {
+    display: flex;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    padding: 36px 44px 36px 0;
+    margin: 48px auto 32px auto;
+    max-width: 1100px;
+    width: 100%;
+    min-height: 340px;
+}
+.banner-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 48px;
+    min-width: 260px;
+    position: relative;
+}
+.banner-img-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.banner-img {
+    width: 180px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    background: #eee;
+}
+.banner-side-text {
+    position: absolute;
+    left: -60px;
+    top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.1em;
+    color: #888;
+    letter-spacing: 0.1em;
+}
+.side-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+.side-dot {
+    width: 12px;
+    height: 12px;
+    background: #ff5e7e;
+    border-radius: 50%;
+    margin: 8px 0;
+    display: block;
+}
+.side-star {
+    font-size: 1.3em;
+    color: #222;
+    margin-top: 8px;
+}
+.side-line {
+    display: block;
+    width: 3px;
+    height: 60px;
+    background: #222;
+    margin: 12px 0 0 0;
+    border-radius: 2px;
+}
+.banner-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 320px;
+}
+.banner-title-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.banner-title {
+    font-size: 2.6em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #222;
+    line-height: 1.1;
+}
+.banner-title-strong {
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 0.08em;
+}
+.banner-leaf {
+    margin-top: 8px;
+}
+.banner-sub {
+    font-size: 1.1em;
+    color: #444;
+    margin: 12px 0 18px 0;
+    letter-spacing: 0.08em;
+}
+.banner-btn-group {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+.banner-btn {
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 28px;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(34,34,34,0.08);
+}
+.banner-btn:hover {
+    background: #ff5e7e;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(255,94,126,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+.banner-btn-secondary {
+    background: #fff;
+    color: #222;
+    border: 2px solid #222;
+}
+.banner-btn-secondary:hover {
+    background: #222;
+    color: #fff;
+    border-color: #ff5e7e;
+}
+.banner-desc {
+    margin-top: 10px;
+    color: #666;
+    font-size: 1.05em;
+    max-width: 420px;
+}
+
+/* Address Card Styles */
+.address-card {
     display: none;
+    position: fixed;
+    z-index: 1002;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.25);
+    align-items: center;
+    justify-content: center;
+}
+.address-card-content {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+    padding: 28px 32px 22px 32px;
+    min-width: 320px;
+    max-width: 95vw;
+    min-height: 220px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.address-close {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+    z-index: 2;
+}
+.address-close:hover {
+    color: #000;
+}
+.address-map {
+    margin-bottom: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.address-info {
+    font-size: 1.05em;
+    color: #333;
+    margin-top: 6px;
 }

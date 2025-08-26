@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo" id="logoHome" style="cursor:pointer;">
+            <img src="img/logo.jpg" alt="Namun Salon Logo" style="height:44px;vertical-align:middle;"> 
+            <span class="salon-title">Namun Salon</span>
+        </div>
+        <div class="auth">
+            <button id="userIconBtn" aria-label="Нэвтрэх" onclick="window.location.href='Login.html'">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M21 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <section id="home" class="banner-home">
+            <div class="banner-container">
+                <div class="banner-left">
+                    <div class="banner-img-group">
+                        <img src="img/20 Très Chic Ways to Rock the Short French Bob Hairstyle.jpg" alt="Salon 1" class="banner-img">
+                        <img src="img/Haircut.jpg" alt="Salon 2" class="banner-img">
+                    </div>
+                    <div class="banner-side-text">
+                        <span class="side-vertical">BEAUTY</span>
+                        <span class="side-dot"></span>
+                        <span class="side-star">★</span>
+                        <span class="side-line"></span>
+                        <span class="side-line"></span>
+                    </div>
+                </div>
+                <div class="banner-right">
+                    <div class="banner-title-group">
+                        <h1 class="banner-title">NATURAL<br><span class="banner-title-strong">_BEAUTY</span></h1>
+                        <div class="banner-leaf">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#222" stroke-width="2">
+                                <path d="M36 10C32 24 16 36 8 38M36 10C34 18 28 30 8 38M36 10C38 18 40 30 8 38"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="banner-sub">BEAUTY & ESTHETIC CENTER</div>
+                    <div class="banner-btn-group">
+                        <a href="Service.html" class="banner-btn">Үйлчилгээ</a>
+                        <a href="Direction.html" class="banner-btn banner-btn-secondary">Хаяг байршил</a>
+                    </div>
+                    <div class="banner-desc">Манай салон руу тавтай морилно уу! Таны гоо сайхны төгс шийдэл энд.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" style="display:none;">
+            <h2>Үйлчилгээ</h2>
+            <div class="service">
+                <span>Маникюр</span>
+                <button class="bookService" data-service="Маникюр">Захиалах</button>
+            </div>
+            <div class="service">
+                <span>Үс засалт</span>
+                <button class="bookService" data-service="Үс засалт">Захиалах</button>
+            </div>
+            <div class="service">
+                <span>Арьс арчилгаа</span>
+                <button class="bookService" data-service="Арьс арчилгаа">Захиалах</button>
+            </div>
+        </section>
+
+        <section id="myBookings" style="display:none;">
+            <h2>Миний захиалгууд</h2>
+            <ul id="bookingList"></ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Salon Booking
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

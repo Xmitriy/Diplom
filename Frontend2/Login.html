@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Signup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+.wrapper { 
+  display: flex; 
+  width: 90vw; 
+  max-width: 900px; 
+  height: 90vh; 
+  min-height: 500px; 
+  border-radius: 15px; 
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+  overflow: hidden; 
+}
+
+.wrapper.signup-active { flex-direction: row-reverse; }
+
+.illustration { flex: 1; display: flex; align-items: center; justify-content: center; background: #e0e0e0; }
+.illustration img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.form-section { flex: 1; display: flex; align-items: center; justify-content: center; background: #fff; }
+.form-container { width: 100%; max-width: 400px; padding: 40px 20px; margin: 0 auto; }
+
+.form-toggle { display: flex; justify-content: center; margin-bottom: 25px; }
+.form-toggle button { flex: 1; padding: 12px 0; cursor: pointer; background: transparent; border: none; border-bottom: 2px solid transparent; font-weight: 600; font-size: 18px; transition: all 0.3s ease; }
+.form-toggle button.active { border-color: #333; color: #333; }
+
+.form { display: none; flex-direction: column; gap: 20px; }
+.form.active { display: flex; }
+
+.form h2 { text-align: center; margin-bottom: 20px; color: #333; font-size: 24px; }
+
+.input-group { position: relative; }
+.input-group input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #ccc; outline: none; }
+.input-group input:focus { border-color: #333; }
+.input-group label { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #aaa; font-size: 14px; transition: 0.2s; }
+.input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -8px; font-size: 12px; color: #333; }
+
+.password-wrapper { position: relative; }
+.password-wrapper .toggle-pass { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 16px; }
+
+.form button { padding: 14px; border-radius: 10px; border: none; background: #333; color: #fff; font-weight: 600; cursor: pointer; font-size: 16px; }
+.form button:hover { background: #555; }
+
+.switch-form { text-align: center; font-size: 14px; }
+.switch-form span { color: #333; cursor: pointer; font-weight: 600; }
+
+.remember-me { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.remember-me input { width: auto; }
+
+@media (max-width: 900px) {
+  .wrapper { flex-direction: column; height: auto; min-height: unset; max-width: 98vw; }
+  .wrapper.signup-active { flex-direction: column; }
+  .illustration { display: none; }
+  .form-section { width: 100%; min-height: 100vh; background: #fff; }
+}
+@media (max-width: 480px) {
+  .form-container { padding: 25px 15px; max-width: 98vw; }
+  .form input, .form button { font-size: 16px; padding: 12px; }
+  .form h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+  <div class="illustration">
+    <img id="sideImage" src="img/Business woman thinking illustration _ Premium Vector.jpg" alt="Иллюстраци">
+  </div>
+  <div class="form-section">
+    <div class="form-container">
+      <div class="form-toggle">
+        <button id="login-toggle" class="active">Login</button>
+        <button id="signup-toggle">Sign Up</button>
+      </div>
+
+      <form id="login-form" class="form active" autocomplete="off">
+        <h2>Нэвтрэх</h2>
+        <div class="input-group password-wrapper">
+          <input type="email" id="loginEmail" placeholder=" " required>
+          <label>Email</label>
+        </div>
+        <div class="input-group password-wrapper">
+          <input type="password" id="loginPass" placeholder=" " required>
+          <label>Нууц үг</label>
+          <span class="toggle-pass" data-target="loginPass">👁️</span>
+        </div>
+        <div class="remember-me">
+          <input type="checkbox" id="loginRemember">
+          <label for="loginRemember">Remember me</label>
+        </div>
+        <button type="submit">Нэвтрэх</button>
+        <p class="switch-form">Шинэ хэрэглэгч үү? <span id="to-signup">Бүртгүүлэх</span></p>
+      </form>
+
+      <form id="signup-form" class="form" autocomplete="off">
+        <h2>Бүртгүүлэх</h2>
+        <div class="input-group">
+          <input type="text" id="signupName" placeholder=" " required>
+          <label>Нэр</label>
+        </div>
+        <div class="input-group">
+          <input type="email" id="signupEmail" placeholder=" " required>
+          <label>Email</label>
+        </div>
+        <div class="input-group password-wrapper">
+          <input type="password" id="signupPass" placeholder=" " required>
+          <label>Нууц үг</label>
+          <span class="toggle-pass" data-target="signupPass">👁️</span>
+        </div>
+        <div class="input-group password-wrapper">
+          <input type="password" id="signupPass2" placeholder=" " required>
+          <label>Нууц үг давтах</label>
+          <span class="toggle-pass" data-target="signupPass2">👁️</span>
+        </div>
+        <div class="remember-me">
+          <input type="checkbox" id="signupRemember">
+          <label for="signupRemember">Remember me</label>
+        </div>
+        <button type="submit">Бүртгүүлэх</button>
+        <p class="switch-form">Өмнө нь бүртгэлтэй юу? <span id="to-login">Нэвтрэх</span></p>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const wrapper = document.getElementById('wrapper');
+const sideImage = document.getElementById('sideImage');
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+const loginToggle = document.getElementById('login-toggle');
+const signupToggle = document.getElementById('signup-toggle');
+const toSignup = document.getElementById('to-signup');
+const toLogin = document.getElementById('to-login');
+
+loginToggle.addEventListener('click', () => {
+  wrapper.classList.remove("signup-active");
+  sideImage.src = "img/login.jpg";
+  loginForm.classList.add('active');
+  signupForm.classList.remove('active');
+  loginToggle.classList.add('active');
+  signupToggle.classList.remove('active');
+});
+
+signupToggle.addEventListener('click', () => {
+  wrapper.classList.add("signup-active");
+  sideImage.src = "img/signup.jpg";
+  signupForm.classList.add('active');
+  loginForm.classList.remove('active');
+  signupToggle.classList.add('active');
+  loginToggle.classList.remove('active');
+});
+
+toSignup.addEventListener('click', () => signupToggle.click());
+toLogin.addEventListener('click', () => loginToggle.click());
+
+document.querySelectorAll('.toggle-pass').forEach(span => {
+  span.addEventListener('click', () => {
+    const targetId = span.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  });
+});
+
+loginForm.onsubmit = function(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  if(email === 'admin' && pass === 'admin123') {
+    window.location.href = 'Admin.html';
+  } else {
+    window.location.href = 'Home.html';
+  }
+};
+
+signupForm.onsubmit = function(e) {
+  e.preventDefault();
+  const pass1 = document.getElementById('signupPass').value.trim();
+  const pass2 = document.getElementById('signupPass2').value.trim();
+  if(pass1 !== pass2) { alert("Нууц үг давхцсангүй!"); return; }
+  alert('Бүртгэл амжилттай!');
+  loginToggle.click();
+};
+</script>
+</body>
+</html>

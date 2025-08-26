@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Захиалга</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #6b46ff;
+      --accent-2: #4b2fd6;
+      --bg: #f7f7f8;
+      --card: #fff;
+      --radius: 14px;
+      --shadow: 0 4px 16px rgba(16,24,40,0.10);
+      --maxwidth: 400px;
+    }
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: var(--maxwidth);
+      width: 100%;
+      padding: 32px 28px 24px 28px;
+      position: relative;
+      animation: fadeIn .3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: none; }
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .modal .close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: #aaa;
+      cursor: pointer;
+      transition: color .15s;
+    }
+    .modal .close:hover { color: var(--accent); }
+    .order-info {
+      background: #f3f0ff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      color: #333;
+      font-size: 15px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    input, textarea {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      outline: none;
+      transition: border .15s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background .15s, transform .13s;
+    }
+    .btn:hover {
+      background: var(--accent-2);
+      transform: scale(1.03);
+    }
+    .success {
+      text-align: center;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 18px;
+    }
+    .slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .slot {
+      min-width: 70px;
+      padding: 7px 0;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 15px;
+      background: #e5e7eb;
+      color: #555;
+      border: none;
+      cursor: pointer;
+      transition: background .13s, color .13s, box-shadow .13s;
+      outline: none;
+    }
+    .slot.selected {
+      background: #22c55e;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(34,197,94,0.13);
+    }
+    .slot.booked {
+      background: #ef4444;
+      color: #fff;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .slot:disabled {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="modal" id="orderModal">
+    <button class="close" onclick="window.close()" title="Хаах">&times;</button>
+    <h2>Захиалга</h2>
+    <div class="order-info" id="orderInfo">
+      <!-- Үйлчилгээ болон үнэ энд гарна -->
+    </div>
+    <form id="orderForm">
+      <label for="name">Таны нэр</label>
+      <input type="text" id="name" name="name" required placeholder="Нэрээ оруулна уу">
+      <label for="phone">Утасны дугаар</label>
+      <input type="tel" id="phone" name="phone" required pattern="[0-9]{8,}" placeholder="Утасны дугаар">
+      <label for="date">Огноо</label>
+      <input type="date" id="date" name="date" required min="" />
+      <label for="time">Цаг сонгох</label>
+      <div class="slots" id="slotList"></div>
+      <input type="hidden" id="slot" name="slot" required />
+      <label for="note">Тайлбар (заавал биш)</label>
+      <textarea id="note" name="note" rows="2" placeholder="Тусгай хүсэлт, цаг, бусад..."></textarea>
+      <button class="btn" type="submit">Захиалах</button>
+    </form>
+    <div class="success" id="successMsg" style="display:none;">Таны захиалга амжилттай илгээгдлээ!<br>Бид удахгүй холбогдох болно.</div>
+  </div>
+  <script>
+    // Захиалгын мэдээллийг query string-ээс авна
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name) || '';
+    }
+    const service = getQueryParam('service');
+    const price = getQueryParam('price');
+    if(service || price) {
+      document.getElementById('orderInfo').textContent = `${service ? service : ''}${service && price ? ' — ' : ''}${price ? price : ''}`;
+    } else {
+      document.getElementById('orderInfo').textContent = 'Үйлчилгээ сонгогдоогүй байна.';
+    }
+
+    // Date picker: set min to today
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    dateInput.min = today.toISOString().split('T')[0];
+    dateInput.value = today.toISOString().split('T')[0];
+
+    // Example: booked slots (simulate)
+    // In real app, fetch from backend
+    function getBookedSlots(date) {
+      // Simulate: some slots are booked for today
+      const booked = {
+        // yyyy-mm-dd: ["10:00", "13:00", ...]
+        [today.toISOString().split('T')[0]]: ["10:00", "13:00"]
+      };
+      return booked[date] || [];
+    }
+
+    // Slot times
+    const allSlots = [
+      "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
+    ];
+
+    function renderSlots(date) {
+      const slotList = document.getElementById('slotList');
+      slotList.innerHTML = '';
+      const booked = getBookedSlots(date);
+      allSlots.forEach(time => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot' + (booked.includes(time) ? ' booked' : '');
+        btn.textContent = time;
+        btn.disabled = booked.includes(time);
+        btn.onclick = function() {
+          document.querySelectorAll('.slot.selected').forEach(el => el.classList.remove('selected'));
+          btn.classList.add('selected');
+          document.getElementById('slot').value = time;
+        };
+        slotList.appendChild(btn);
+      });
+      // Reset slot value
+      document.getElementById('slot').value = '';
+    }
+
+    dateInput.addEventListener('change', function() {
+      renderSlots(this.value);
+    });
+    // Initial render
+    renderSlots(dateInput.value);
+
+    // Form submit
+    document.getElementById('orderForm').onsubmit = function(e) {
+      e.preventDefault();
+      if(!document.getElementById('slot').value) {
+        alert('Цаг сонгоно уу!');
+        return;
+      }
+      // --- Save order to localStorage for admin ---
+      const order = {
+        service: service || '',
+        price: price || '',
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('slot').value,
+        note: document.getElementById('note').value
+      };
+      const orders = JSON.parse(localStorage.getItem('salonOrders')||'[]');
+      orders.push(order);
+      localStorage.setItem('salonOrders', JSON.stringify(orders));
+      // ---
+      document.getElementById('orderForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      setTimeout(() => { window.close(); }, 2200);
+    };
+  </script>
+</body>
+</html>
+<!--
+Холболтын JS-г Us.html, Hums.html, Aris.html-д дараах байдлаар ашиглана:
+function order(service, price) {
+  window.open(`Zahialga.html?service=${encodeURIComponent(service)}&price=${encodeURIComponent(price)}`, '_blank', 'width=480,height=600');
+}
+-->
